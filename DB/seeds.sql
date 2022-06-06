@@ -1,4 +1,4 @@
-INSERT INTO department (name) VALUES
+INSERT INTO departments (name) VALUES
 ("Developers"),
 ("Testers"),
 ("Management"),
@@ -15,7 +15,7 @@ INSERT INTO roles (title, salary, department_id) VALUES
 ("Senior Dev Full Stack", 150000, 1),
 ("Facilities Management", 150000,3);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
+INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES
 ("Barundin", "Holdstream", 1, 3),
 ("Deldric", "ThumbHammer", 1, 3),
 ("Dorin", "GrimBeard", 2, 3),

@@ -76,8 +76,8 @@ const startQuestions = () => {
 const viewDepts = async () => {
 
     const res = await query(`
-    SELECT id, name AS deptActual 
-    FROM deptActual;
+    SELECT id, name AS departments 
+    FROM departments;
     `)
 
     tableLayout(res);
@@ -88,9 +88,9 @@ const viewDepts = async () => {
 const viewRoles = async () => {
 
     const res = await query (`
-    SELECT roles.id, roles.title, deptActual.name AS deptActual, roles.salary 
+    SELECT roles.id, roles.title, departments.name AS departments, roles.salary 
     FROM roles 
-    JOIN deptActual ON roles.department_id = deptActual.id;
+    JOIN departments ON roles.department_id = departments.id;
     `)
     
     tableLayout(res);
@@ -101,10 +101,10 @@ const viewRoles = async () => {
 const viewEmps = async () => {
 
     const res = await query (`
-    SELECT employee.id, CONCAT(employee.first_name, " ", employee.last_name) AS employee, roles.title AS roleActual, roles.salary AS salary, deptActual.name AS deptActual, CONCAT(mang.first_name, " ", mang.last_name) AS manager
+    SELECT employees.id, CONCAT(employee.first_name, " ", employees.last_name) AS employee, roles.title AS roles, roles.salary AS salary, departments.name AS departments, CONCAT(mang.first_name, " ", mang.last_name) AS manager
     FROM employee
     JOIN roles on employee.role_id = roles.id
-    JOIN deptActual ON roles.department_id = deptActual.id
+    JOIN departments ON roles.department_id = departments.id
     JOIN employee mang ON mang.id = employee.manager_id;
     `)
 
@@ -118,7 +118,7 @@ const addDepts = async () => {
     const newDepts = await inquirer.prompt(questionList.includeDeptQs);
 
     await query(`
-    INSERT INTO deptActual (name) 
+    INSERT INTO departments (name) 
     VALUES (?)`, newDepts.deptNames.trim());
     
     await viewDepts();
@@ -134,7 +134,7 @@ const addRoles = async () => {
 
     // Create the department Id
     const queryDepts = await query(`
-    SELECT id from deptActual 
+    SELECT id from departments 
     WHERE name = (?)`, addingRole.deptOfRole);
     const departmentID = queryDepts[0].id;
 
@@ -163,11 +163,11 @@ const addEmps = async () => {
     // Create manager Id
     const nameOfManager = addNewEmps.managerDept.split(' ');
     const managerSearch = await query(`
-    SELECT id from employee 
+    SELECT id from employees 
     WHERE first_name = (?) AND last_name = (?);`, [nameOfManager[0], nameOfManager[1]]);
     const managersID = managerSearch[0].id;
     await query(`
-    INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES (?, ?, ?, ?)`, [addNewEmps.firstName, addNewEmps.lastName, rolesIds, managersID]);
 
     viewEmps();
@@ -188,12 +188,12 @@ const updateCurrentRoles = async () => {
 
     const employeeName = empUpdateRoles.currentEmpUpdate.split(' ');
     const employeeSearch = await query(`
-    SELECT id from employee 
+    SELECT id from employees 
     WHERE first_name = (?) AND last_name = (?);`, [employeeName[0], employeeName[1]]);
     const employeeId = employeeSearch[0].id;
 
     await query(`
-    UPDATE employee
+    UPDATE employees
     SET role_id = (?)
     WHERE id = (?)`, [rolesIds, employeeId]);
 
@@ -224,14 +224,14 @@ const tableLayout = (data) => {
 const grabDepts = async () => {
     
     // Search Departments
-    const deptLists = await query(`SELECT id, name FROM deptActual;`);
+    const deptLists = await query(`SELECT id, name FROM departments;`);
 
     // Fill empDept
     for (const innerDepts of deptLists) {
-        const deptActual = {};
-        deptActual.id = innerDepts.id;
-        deptActual.name = innerDepts.name;
-        questionList.empDept.push(deptActual);
+        const departments = {};
+        departments.id = innerDepts.id;
+        departments.name = innerDepts.name;
+        questionList.empDept.push(departments);
     };
 };
 
@@ -241,23 +241,23 @@ const grabRoles = async () => {
     const roleLists = await query(`SELECT id, title FROM roles;`);
 
     for (const innerRoles of roleLists) {
-        const roleActual = {};
-        roleActual.id = innerRoles.id;
-        roleActual.name = innerRoles.title;
-        questionList.empRole.push(roleActual);
+        const roles = {};
+        roles.id = innerRoles.id;
+        roles.name = innerRoles.title;
+        questionList.empRole.push(roles);
     };
 };
 
 // grabEmps will search all employees then fill questionList.empstat
 const grabEmps = async () => {
 
-    const empLists  = await query(`SELECT id, first_name, last_name FROM employee;`);
+    const empLists  = await query(`SELECT id, first_name, last_name FROM employees;`);
     
     for (const innerEmps of empLists) {
-        const empActual = {};
-        empActual.id = innerEmps.id;
-        empActual.name = `${innerEmps.first_name} ${innerEmps.last_name}`;
-        questionList.empStat.push(empActual);
+        const employees = {};
+        employees.id = innerEmps.id;
+        employees.name = `${innerEmps.first_name} ${innerEmps.last_name}`;
+        questionList.empStat.push(employees);
     };
 };
 
