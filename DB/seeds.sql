@@ -22,5 +22,5 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 ("Elmador", "Stoutwatch", 3, 3),
 ("Hugrim", "Kindanvil", 4, 3),
 ("Grungi", "Morecaps", 5, 3),
-("Kazador", "StellGleam", 3, 3),
+("Kazador", "SteelGleam", 3, 3);
 
