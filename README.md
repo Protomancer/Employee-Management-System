@@ -27,10 +27,11 @@ You can reach out to me on Github @Protomancer.
 2.All the lovely folks over at askBCS.
 3.My dog, for helping me keep my sanity.
 
+## Usage Video
 
+https://drive.google.com/file/d/16NEWb5hFWkSUErGXo6Cjgnb0Bbkmp7x3/view
 
-
-## Badges
+### Badges
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![NPM](https://img.shields.io/badge/NPM-%23000000.svg?style=for-the-badge&logo=npm&logoColor=white)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
