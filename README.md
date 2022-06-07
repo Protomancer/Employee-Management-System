@@ -25,7 +25,7 @@ You can reach out to me on Github @Protomancer.
 
 1.My tutor Dru Sanchez
 2.All the lovely folks over at askBCS.
-3.My dog, for helping em keep my sanity.
+3.My dog, for helping me keep my sanity.
 
 
 
